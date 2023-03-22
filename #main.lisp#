@@ -1,6 +1,7 @@
 (load "~/quicklisp/setup.lisp")
 (asdf:load-system "cl-ppcre")
 (asdf:load-system "cl-unicode")
+(asdf:load-system "str")
 
 (defparameter *roman-map* (make-hash-table))
 (setf (gethash '1000 *roman-map*) "M")
@@ -26,7 +27,7 @@
 	       (setf difference (- number ( mod number key)))
 	       (setf amount (/ difference key))
 	       (loop for i from 1 to amount do 
-	 (setf roman (concatenate 'string roman val)))
+	 (setf roman (str:concat roman val)))
 	       (setf number (- number difference))
 	     )
              *roman-map*)
@@ -35,7 +36,7 @@
 	     (setf roman (ppcre:regex-replace (write-to-string key) roman val)))
 	   *long-to-short-map*)
   ;;return roman numeral
-  roman)  
+    roman)  
   )
 
 (format t "~&~A ~&" (to-roman 2844))
